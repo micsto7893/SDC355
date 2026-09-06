@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDC355 Project</title>
+</head>
+
+<body>
+    <h1 id="welcome">SDC355 Project Page</h1>
+    <nav>
+        <a href="#about">About</a> |
+        <a href="#projects">Projects</a> |
+        <a href="#contact">Contact</a>
+    </nav>
+    <hr>
+    <section id="about">
+        <h2>About</h2>
+        <p>
+            Hello, my name is Michael Stoller.
+            Currently enrolled in SDC355 through ECPI.
+            Working on keeping up with all the assingments while having a full time job and two young boys, plus a wife.
+        </p>
+    </section>
+  
+    <hr>
+  
+    <section id="projects">
+        <h2>Projects</h2>
+    
+        <p>Here are some of my projects:</p>
+    
+        <a href="https://stoppoint.us" target="_blank">
+            <img src="https://via.placeholder.com/150" alt="StopPoint Project">
+        </a>
+        <p>StopPoint</p>
+    
+        <a href="https://micsto7893.github.io/vigilant-waffle/" target="_blank">
+            <img src="https://via.placeholder.com/150" alt="Vigilant Waffle Project">
+        </a>
+        <p>Vigilant Waffle</p>
+    
+        <a href="https://github.com/micsto7893/hello-world" target="_blank">
+            <img src="https://via.placeholder.com/150" alt="Hello World Project">
+        </a>
+        <p>Hello World</p>
+    </section>
+  
+   <hr>
+  
+    <section id="contact">
+        <h2>Contact</h2>
+        <form>
+            <label for="name">Name:</label><br>
+            <input type="text" id="name"><br><br>
+
+            <label for="email">Email Address:</label><br>
+            <input type="email" id="email"><br><br>
+
+            <label for="subject">Subject:</label><br>
+            <input type="text" id="subject"><br><br>
+
+            <label for="message">Message:</label><br>
+            <textarea id="message" rows="5" cols="30"></textarea><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+
+    <script>
+        // Ask the user for their name
+        let userName = prompt("What is your name?");
+
+        // Display a welcome message
+        document.getElementById("welcome").innerText =
+            "You've arrived where you were always meant to be, " + userName + "!";
+    </script>
+
+</body>
+</html>
