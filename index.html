@@ -1,69 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>SDC355 Project</title>
+
+    <style>
+        body {font-family: Arial, sans-serif; background-color: white; color: black; margin: 20px;}
+        body.dark-mode {background-color: #222; color: white;}
+        nav a {color: blue;}
+        body.dark-mode nav a {color: lightblue;}
+        #darkModeContainer {margin-bottom: 20px;}
+        #featuredContent {margin-top: 20px;}
+        .featured-box {border: 2px solid #555; padding: 15px; margin: 10px 0; background-color: #f2f2f2;}
+        body.dark-mode .featured-box {background-color: #333; border-color: white;}
+        .featured-box img {width: 150px; margin-right: 10px;}
+    </style>
 </head>
 
 <body>
+    <div id="darkModeContainer">
+        <label for="darkModeToggle">Dark Mode</label>
+        <input type="checkbox" id="darkModeToggle">
+    </div>
+
     <h1 id="welcome">SDC355 Project Page</h1>
     <nav>
         <a href="#about">About</a> |
         <a href="#projects">Projects</a> |
+        <a href="#featuredContent">Featured Content</a> |
         <a href="#contact">Contact</a>
     </nav>
+
     <hr>
+
     <section id="about">
         <h2>About</h2>
         <p>
             Hello, my name is Michael Stoller.
             Currently enrolled in SDC355 through ECPI.
-            Working on keeping up with all the assingments while having a full time job and two young boys, plus a wife.
+            Working on keeping up with all the assignments while having
+            a full-time job, two young boys, and a wife.
         </p>
+        <h3>Skills and Technologies</h3>
+        <ul id="skillsList"></ul>
     </section>
-  
+
     <hr>
-  
+
+    <section id="featuredContent">
+        <h2>Featured Content</h2>
+        <div id="universityResources" class="featured-box">
+            <h3>University Resources</h3>
+            <p>
+                <a href="https://www.ecpi.edu/" target="_blank">
+                    ECPI University
+                </a>
+            </p>
+        </div>
+
+        <div id="personalProjects" class="featured-box">
+            <h3>Personal Projects</h3>
+            <a href="https://stoppoint.us" target="_blank">
+                <img
+                    src="https://via.placeholder.com/150"
+                    alt="StopPoint Project">
+            </a>
+            <a
+                href="https://micsto7893.github.io/vigilant-waffle/"
+                target="_blank">
+                <img
+                    src="https://via.placeholder.com/150"
+                    alt="Vigilant Waffle Project">
+            </a>
+        </div>
+    </section>
+
+    <hr>
+
     <section id="projects">
         <h2>Projects</h2>
-    
         <p>Here are some of my projects:</p>
-    
-        <a href="https://stoppoint.us" target="_blank">
-            <img src="https://via.placeholder.com/150" alt="StopPoint Project">
-        </a>
-        <p>StopPoint</p>
-    
-        <a href="https://micsto7893.github.io/vigilant-waffle/" target="_blank">
-            <img src="https://via.placeholder.com/150" alt="Vigilant Waffle Project">
-        </a>
-        <p>Vigilant Waffle</p>
-    
-        <a href="https://github.com/micsto7893/hello-world" target="_blank">
-            <img src="https://via.placeholder.com/150" alt="Hello World Project">
-        </a>
-        <p>Hello World</p>
+        <div class="project">
+            <a href="https://stoppoint.us" target="_blank">
+                <img
+                    src="https://via.placeholder.com/150"
+                    alt="StopPoint Project">
+            </a>
+            <p>StopPoint</p>
+        </div>
+
+        <div class="project">
+            <a
+                href="https://micsto7893.github.io/vigilant-waffle/"
+                target="_blank">
+                <img
+                    src="https://via.placeholder.com/150"
+                    alt="Vigilant Waffle Project">
+            </a>
+            <p>Vigilant Waffle</p>
+        </div>
+
+        <div class="project">
+            <a
+                href="https://github.com/micsto7893/hello-world"
+                target="_blank">
+                <img
+                    src="https://via.placeholder.com/150"
+                    alt="Hello World Project">
+            </a>
+            <p>Hello World</p>
+        </div>
     </section>
-  
-   <hr>
-  
+
+    <hr>
+
     <section id="contact">
         <h2>Contact</h2>
         <form>
             <label for="name">Name:</label><br>
             <input type="text" id="name"><br><br>
-
             <label for="email">Email Address:</label><br>
             <input type="email" id="email"><br><br>
-
             <label for="subject">Subject:</label><br>
             <input type="text" id="subject"><br><br>
-
             <label for="message">Message:</label><br>
             <textarea id="message" rows="5" cols="30"></textarea><br><br>
-
-            <input type="submit" value="Submit">
+            <input type="submit" id="submitButton" value="Submit">
         </form>
     </section>
 
@@ -72,9 +137,65 @@
         let userName = prompt("What is your name?");
 
         // Display a welcome message
-        document.getElementById("welcome").innerText =
-            "You've arrived where you were always meant to be, " + userName + "!";
-    </script>
+        document.getElementById("welcome").innerText = "You've arrived where you were always meant to be, " + userName + "!";
 
+        // Array of skills and technologies
+        const skills = ["HTML", "CSS", "JavaScript", "Git", "GitHub"];
+
+        // Display skills using a loop
+        const skillsList = 
+            document.getElementById("skillsList");
+
+        for (let i = 0; i < skills.length; i++) {
+            const listItem =
+                document.createElement("li");
+            listItem.textContent = skills[i];
+            skillsList.appendChild(listItem);
+        }
+
+        // Determine which Featured Content sections to display
+        const projects =
+            document.querySelectorAll("#projects .project");
+        const universityResources =
+            document.getElementById("universityResources");
+        const personalProjects =
+            document.getElementById("personalProjects");
+
+        if (projects.length < 3) {
+            universityResources.style.display = "block";
+            personalProjects.style.display = "block";
+        }
+        else {
+            universityResources.style.display = "none";
+            personalProjects.style.display = "block";
+        }
+
+        // Dark Mode toggle
+        const darkModeToggle =
+            document.getElementById("darkModeToggle");
+
+        darkModeToggle.addEventListener(
+            "change",
+            function () {
+                document.body.classList.toggle(
+                    "dark-mode",
+                    darkModeToggle.checked
+                );
+            }
+        );
+
+        // Contact form submit button
+        const submitButton =
+            document.getElementById("submitButton");
+        submitButton.addEventListener(
+            "click",
+            function (event) {
+                event.preventDefault();
+                const contactName =
+                    document.getElementById("name").value;
+                alert("Thank you, " + contactName + ", your message has been sent!");
+            }
+        );
+    </script>
 </body>
 </html>
