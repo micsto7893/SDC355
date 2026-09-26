@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>SDC355 Project</title>
-
     <style>
         body {font-family: Arial, sans-serif; background-color: white; color: black; margin: 20px;}
         body.dark-mode {background-color: #222; color: white;}
@@ -17,6 +15,7 @@
         .featured-box {border: 2px solid #555; padding: 15px; margin: 10px 0; background-color: #f2f2f2;}
         body.dark-mode .featured-box {background-color: #333; border-color: white;}
         .featured-box img {width: 150px; margin-right: 10px;}
+        #formStatus {margin-top: 10px; font-weight: bold;}
     </style>
 </head>
 
@@ -25,7 +24,6 @@
         <label for="darkModeToggle">Dark Mode</label>
         <input type="checkbox" id="darkModeToggle">
     </div>
-
     <h1 id="welcome">SDC355 Project Page</h1>
     <nav>
         <a href="#about">About</a> |
@@ -37,7 +35,7 @@
     <hr>
 
     <section id="about">
-        <h2>About</h2>
+        <h2 id="aboutHeading">About</h2>
         <p>
             Hello, my name is Michael Stoller.
             Currently enrolled in SDC355 through ECPI.
@@ -60,7 +58,6 @@
                 </a>
             </p>
         </div>
-
         <div id="personalProjects" class="featured-box">
             <h3>Personal Projects</h3>
             <a href="https://stoppoint.us" target="_blank">
@@ -81,7 +78,7 @@
     <hr>
 
     <section id="projects">
-        <h2>Projects</h2>
+        <h2 id="projectsHeading">Projects</h2>
         <p>Here are some of my projects:</p>
         <div class="project">
             <a href="https://stoppoint.us" target="_blank">
@@ -91,7 +88,7 @@
             </a>
             <p>StopPoint</p>
         </div>
-
+        
         <div class="project">
             <a
                 href="https://micsto7893.github.io/vigilant-waffle/"
@@ -119,61 +116,77 @@
 
     <section id="contact">
         <h2>Contact</h2>
-        <form>
+        <form id="contactForm">
             <label for="name">Name:</label><br>
             <input type="text" id="name"><br><br>
+
             <label for="email">Email Address:</label><br>
             <input type="email" id="email"><br><br>
+
             <label for="subject">Subject:</label><br>
             <input type="text" id="subject"><br><br>
+
             <label for="message">Message:</label><br>
             <textarea id="message" rows="5" cols="30"></textarea><br><br>
+
             <input type="submit" id="submitButton" value="Submit">
         </form>
+
+        <!-- Area used for the sending and confirmation messages -->
+        <p id="formStatus"></p>
     </section>
 
     <script>
-        // Ask the user for their name
+        //Ask the user for their name
         let userName = prompt("What is your name?");
 
-        // Display a welcome message
-        document.getElementById("welcome").innerText = "You've arrived where you were always meant to be, " + userName + "!";
+        //Display a welcome message
+        document.getElementById("welcome").innerText =
+            "You've arrived where you were always meant to be, " + userName + "!";
 
-        // Array of skills and technologies
-        const skills = ["HTML", "CSS", "JavaScript", "Git", "GitHub"];
+        //Array of skills and technologies
+        const skills = [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Git",
+            "GitHub"
+        ];
 
-        // Display skills using a loop
-        const skillsList = 
+        //Display skills using a loop
+        const skillsList =
             document.getElementById("skillsList");
-
         for (let i = 0; i < skills.length; i++) {
             const listItem =
                 document.createElement("li");
-            listItem.textContent = skills[i];
+            listItem.textContent =
+                skills[i];
             skillsList.appendChild(listItem);
         }
 
-        // Determine which Featured Content sections to display
+        //Determine which Featured Content sections to display
         const projects =
             document.querySelectorAll("#projects .project");
         const universityResources =
             document.getElementById("universityResources");
         const personalProjects =
             document.getElementById("personalProjects");
-
         if (projects.length < 3) {
-            universityResources.style.display = "block";
-            personalProjects.style.display = "block";
+            universityResources.style.display =
+                "block";
+            personalProjects.style.display =
+                "block";
         }
         else {
-            universityResources.style.display = "none";
-            personalProjects.style.display = "block";
+            universityResources.style.display =
+                "none";
+            personalProjects.style.display =
+                "block";
         }
 
-        // Dark Mode toggle
+        //Dark Mode toggle
         const darkModeToggle =
             document.getElementById("darkModeToggle");
-
         darkModeToggle.addEventListener(
             "change",
             function () {
@@ -184,16 +197,58 @@
             }
         );
 
-        // Contact form submit button
-        const submitButton =
-            document.getElementById("submitButton");
-        submitButton.addEventListener(
-            "click",
+        //Dynamically create and add a new paragraph to the Projects section.
+        const projectsSection =
+            document.getElementById("projects");
+        const newProjectMessage =
+            document.createElement("p");
+        newProjectMessage.textContent =
+            "I am continuing to expand my portfolio with new web development projects using HTML, CSS, and JavaScript.";
+        projectsSection.appendChild(
+            newProjectMessage
+        );
+
+        //Select and modify two existing elements.
+        const aboutHeading =
+            document.querySelector("#aboutHeading");
+        aboutHeading.textContent =
+            "About Me";
+        aboutHeading.style.fontSize =
+            "28px";
+
+        const projectsHeading =
+            document.getElementById("projectsHeading");
+        projectsHeading.style.borderBottom =
+            "2px solid black";
+        projectsHeading.style.paddingBottom =
+            "5px";
+
+        //Contact form submission. Prevent the normal form submission, display a sending message, then display a confirmation after 3 seconds.
+        const contactForm =
+            document.getElementById("contactForm");
+        contactForm.addEventListener(
+            "submit",
             function (event) {
+
+                //Prevent normal form submission
                 event.preventDefault();
-                const contactName =
-                    document.getElementById("name").value;
-                alert("Thank you, " + contactName + ", your message has been sent!");
+
+                //Select the status message element
+                const formStatus =
+                    document.getElementById("formStatus");
+
+                //Display sending message
+                formStatus.textContent =
+                    "Sending message...";
+
+                //Wait three seconds before displaying the confirmation message.
+                setTimeout(
+                    function () {
+                        formStatus.textContent =
+                            "Message sent successfully!";
+                    },
+                    3000
+                );
             }
         );
     </script>
