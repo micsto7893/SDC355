@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDC355 Project</title>
+
     <style>
         body {font-family: Arial, sans-serif; background-color: white; color: black; margin: 20px;}
         body.dark-mode {background-color: #222; color: white;}
@@ -16,15 +17,40 @@
         body.dark-mode .featured-box {background-color: #333; border-color: white;}
         .featured-box img {width: 150px; margin-right: 10px;}
         #formStatus {margin-top: 10px; font-weight: bold;}
+
+        /* Welcome modal */
+        #welcomeModal {display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); 
+            justify-content: center; align-items: center; z-index: 1000;}
+
+        .modal-content {background-color: white; color: black; padding: 25px; text-align: center; border-radius: 8px;}
+        body.dark-mode .modal-content {background-color: #333; color: white;}
+
+        /* Submit button tooltip */
+        .tooltip {position: relative; display: inline-block;}
+
+        .tooltip .tooltip-text {visibility: hidden; background-color: #333; color: white; padding: 5px 8px; border-radius: 4px;
+            position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: nowrap;}
+        .tooltip:hover .tooltip-text {visibility: visible;}
     </style>
 </head>
 
 <body>
+    <!-- Welcome modal displayed when the page loads -->
+    <div id="welcomeModal">
+        <div class="modal-content">
+            <h2>Welcome!</h2>
+            <p>This page is a work in progress.</p>
+            <button id="closeModal">Close</button>
+        </div>
+    </div>
+
     <div id="darkModeContainer">
         <label for="darkModeToggle">Dark Mode</label>
         <input type="checkbox" id="darkModeToggle">
     </div>
+
     <h1 id="welcome">SDC355 Project Page</h1>
+
     <nav>
         <a href="#about">About</a> |
         <a href="#projects">Projects</a> |
@@ -36,12 +62,13 @@
 
     <section id="about">
         <h2 id="aboutHeading">About</h2>
+
         <p>
             Hello, my name is Michael Stoller.
             Currently enrolled in SDC355 through ECPI.
-            Working on keeping up with all the assignments while having
-            a full-time job, two young boys, and a wife.
+            Working on keeping up with all the assignments while having a full-time job, two young boys, and a wife.
         </p>
+
         <h3>Skills and Technologies</h3>
         <ul id="skillsList"></ul>
     </section>
@@ -50,21 +77,26 @@
 
     <section id="featuredContent">
         <h2>Featured Content</h2>
+
         <div id="universityResources" class="featured-box">
             <h3>University Resources</h3>
+
             <p>
                 <a href="https://www.ecpi.edu/" target="_blank">
                     ECPI University
                 </a>
             </p>
         </div>
+
         <div id="personalProjects" class="featured-box">
             <h3>Personal Projects</h3>
+
             <a href="https://stoppoint.us" target="_blank">
                 <img
                     src="https://via.placeholder.com/150"
                     alt="StopPoint Project">
             </a>
+
             <a
                 href="https://micsto7893.github.io/vigilant-waffle/"
                 target="_blank">
@@ -79,7 +111,9 @@
 
     <section id="projects">
         <h2 id="projectsHeading">Projects</h2>
+
         <p>Here are some of my projects:</p>
+
         <div class="project">
             <a href="https://stoppoint.us" target="_blank">
                 <img
@@ -88,7 +122,7 @@
             </a>
             <p>StopPoint</p>
         </div>
-        
+
         <div class="project">
             <a
                 href="https://micsto7893.github.io/vigilant-waffle/"
@@ -116,6 +150,7 @@
 
     <section id="contact">
         <h2>Contact</h2>
+
         <form id="contactForm">
             <label for="name">Name:</label><br>
             <input type="text" id="name"><br><br>
@@ -127,24 +162,46 @@
             <input type="text" id="subject"><br><br>
 
             <label for="message">Message:</label><br>
-            <textarea id="message" rows="5" cols="30"></textarea><br><br>
+            <textarea
+                id="message"
+                rows="5"
+                cols="30"></textarea>
 
-            <input type="submit" id="submitButton" value="Submit">
+            <br><br>
+
+            <!-- Tooltip added to Submit button -->
+            <div class="tooltip">
+                <input
+                    type="submit"
+                    id="submitButton"
+                    value="Submit">
+
+                <span class="tooltip-text">
+                    Click to send your message!
+                </span>
+            </div>
         </form>
 
-        <!-- Area used for the sending and confirmation messages -->
         <p id="formStatus"></p>
     </section>
 
     <script>
-        //Ask the user for their name
-        let userName = prompt("What is your name?");
 
-        //Display a welcome message
-        document.getElementById("welcome").innerText =
-            "You've arrived where you were always meant to be, " + userName + "!";
+        // Close the welcome modal when the Close button is clicked
+        const welcomeModal =
+            document.getElementById("welcomeModal");
 
-        //Array of skills and technologies
+        const closeModal =
+            document.getElementById("closeModal");
+
+        closeModal.addEventListener(
+            "click",
+            function () {
+                welcomeModal.style.display = "none";
+            }
+        );
+
+        // Array of skills and technologies
         const skills = [
             "HTML",
             "CSS",
@@ -153,95 +210,142 @@
             "GitHub"
         ];
 
-        //Display skills using a loop
+        // Display skills using a loop
         const skillsList =
             document.getElementById("skillsList");
+
         for (let i = 0; i < skills.length; i++) {
             const listItem =
                 document.createElement("li");
+
             listItem.textContent =
                 skills[i];
-            skillsList.appendChild(listItem);
+
+            skillsList.appendChild(
+                listItem
+            );
         }
 
-        //Determine which Featured Content sections to display
+        // Determine which Featured Content sections to display
         const projects =
             document.querySelectorAll("#projects .project");
+
         const universityResources =
             document.getElementById("universityResources");
+
         const personalProjects =
             document.getElementById("personalProjects");
+
         if (projects.length < 3) {
             universityResources.style.display =
                 "block";
+
             personalProjects.style.display =
                 "block";
         }
         else {
             universityResources.style.display =
                 "none";
+
             personalProjects.style.display =
                 "block";
         }
 
-        //Dark Mode toggle
+        // Dark Mode toggle
         const darkModeToggle =
             document.getElementById("darkModeToggle");
+
+
+        // Check localStorage when the page loads
+        const savedDarkMode =
+            localStorage.getItem("darkMode");
+
+        if (savedDarkMode === "enabled") {
+            document.body.classList.add(
+                "dark-mode"
+            );
+
+            darkModeToggle.checked =
+                true;
+        }
+
+        // Change Dark Mode and save the user's preference
         darkModeToggle.addEventListener(
             "change",
             function () {
+
                 document.body.classList.toggle(
                     "dark-mode",
                     darkModeToggle.checked
                 );
+
+                if (darkModeToggle.checked) {
+                    localStorage.setItem(
+                        "darkMode",
+                        "enabled"
+                    );
+                }
+                else {
+                    localStorage.setItem(
+                        "darkMode",
+                        "disabled"
+                    );
+                }
             }
         );
 
-        //Dynamically create and add a new paragraph to the Projects section.
+        // Dynamically create and add a new paragraph to the Projects section
         const projectsSection =
             document.getElementById("projects");
+
         const newProjectMessage =
             document.createElement("p");
+
         newProjectMessage.textContent =
             "I am continuing to expand my portfolio with new web development projects using HTML, CSS, and JavaScript.";
+
         projectsSection.appendChild(
             newProjectMessage
         );
 
-        //Select and modify two existing elements.
+        // Select and modify two existing elements
         const aboutHeading =
             document.querySelector("#aboutHeading");
+
         aboutHeading.textContent =
             "About Me";
+
         aboutHeading.style.fontSize =
             "28px";
 
         const projectsHeading =
             document.getElementById("projectsHeading");
+
         projectsHeading.style.borderBottom =
             "2px solid black";
+
         projectsHeading.style.paddingBottom =
             "5px";
 
-        //Contact form submission. Prevent the normal form submission, display a sending message, then display a confirmation after 3 seconds.
+        // Contact form submission
         const contactForm =
             document.getElementById("contactForm");
+
         contactForm.addEventListener(
             "submit",
             function (event) {
 
-                //Prevent normal form submission
+                // Prevent normal form submission
                 event.preventDefault();
 
-                //Select the status message element
                 const formStatus =
                     document.getElementById("formStatus");
 
-                //Display sending message
+                // Display sending message
                 formStatus.textContent =
                     "Sending message...";
 
-                //Wait three seconds before displaying the confirmation message.
+                // Wait three seconds before confirmation
                 setTimeout(
                     function () {
                         formStatus.textContent =
