@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <!--
+        Assignment: Create Custom Project Objects
+        Name: Michael Stoller
+        Date: October 4, 2026
+        Purpose: The end has come!
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SDC355 Project</title>
-
     <style>
         body {font-family: Arial, sans-serif; background-color: white; color: black; margin: 20px;}
         body.dark-mode {background-color: #222; color: white;}
@@ -18,22 +22,26 @@
         .featured-box img {width: 150px; margin-right: 10px;}
         #formStatus {margin-top: 10px; font-weight: bold;}
 
-        /* Welcome modal */
-        #welcomeModal {display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); 
-            justify-content: center; align-items: center; z-index: 1000;}
+        /* Project styling */
+        .project {border: 1px solid #777; padding: 15px; margin: 15px 0;}
+        body.dark-mode .project {border-color: #ccc;}
+        .project img {width: 150px; height: 150px; object-fit: cover;}
+        .project a {color: blue;}
+        body.dark-mode .project a {color: lightblue;}
 
+        /* Welcome modal */
+        #welcomeModal {display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center; align-items: center; z-index: 1000;}
         .modal-content {background-color: white; color: black; padding: 25px; text-align: center; border-radius: 8px;}
         body.dark-mode .modal-content {background-color: #333; color: white;}
 
         /* Submit button tooltip */
         .tooltip {position: relative; display: inline-block;}
-
         .tooltip .tooltip-text {visibility: hidden; background-color: #333; color: white; padding: 5px 8px; border-radius: 4px;
             position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); white-space: nowrap;}
         .tooltip:hover .tooltip-text {visibility: visible;}
     </style>
 </head>
-
 <body>
     <!-- Welcome modal displayed when the page loads -->
     <div id="welcomeModal">
@@ -50,7 +58,7 @@
     </div>
 
     <h1 id="welcome">SDC355 Project Page</h1>
-
+    
     <nav>
         <a href="#about">About</a> |
         <a href="#projects">Projects</a> |
@@ -62,13 +70,12 @@
 
     <section id="about">
         <h2 id="aboutHeading">About</h2>
-
         <p>
             Hello, my name is Michael Stoller.
             Currently enrolled in SDC355 through ECPI.
-            Working on keeping up with all the assignments while having a full-time job, two young boys, and a wife.
+            Working on keeping up with all the assignments while having a
+            full-time job, two young boys, and a wife.
         </p>
-
         <h3>Skills and Technologies</h3>
         <ul id="skillsList"></ul>
     </section>
@@ -77,26 +84,17 @@
 
     <section id="featuredContent">
         <h2>Featured Content</h2>
-
         <div id="universityResources" class="featured-box">
             <h3>University Resources</h3>
-
-            <p>
-                <a href="https://www.ecpi.edu/" target="_blank">
-                    ECPI University
-                </a>
-            </p>
+            <p><a href="https://www.ecpi.edu/" target="_blank">ECPI University</a></p>
         </div>
-
         <div id="personalProjects" class="featured-box">
             <h3>Personal Projects</h3>
-
             <a href="https://stoppoint.us" target="_blank">
                 <img
                     src="https://via.placeholder.com/150"
                     alt="StopPoint Project">
             </a>
-
             <a
                 href="https://micsto7893.github.io/vigilant-waffle/"
                 target="_blank">
@@ -111,46 +109,16 @@
 
     <section id="projects">
         <h2 id="projectsHeading">Projects</h2>
-
         <p>Here are some of my projects:</p>
-
-        <div class="project">
-            <a href="https://stoppoint.us" target="_blank">
-                <img
-                    src="https://via.placeholder.com/150"
-                    alt="StopPoint Project">
-            </a>
-            <p>StopPoint</p>
-        </div>
-
-        <div class="project">
-            <a
-                href="https://micsto7893.github.io/vigilant-waffle/"
-                target="_blank">
-                <img
-                    src="https://via.placeholder.com/150"
-                    alt="Vigilant Waffle Project">
-            </a>
-            <p>Vigilant Waffle</p>
-        </div>
-
-        <div class="project">
-            <a
-                href="https://github.com/micsto7893/hello-world"
-                target="_blank">
-                <img
-                    src="https://via.placeholder.com/150"
-                    alt="Hello World Project">
-            </a>
-            <p>Hello World</p>
-        </div>
+        
+        <!--Project objects will be dynamically displayed inside this container using JavaScript.-->
+        <div id="projectContainer"></div>
     </section>
 
     <hr>
 
     <section id="contact">
         <h2>Contact</h2>
-
         <form id="contactForm">
             <label for="name">Name:</label><br>
             <input type="text" id="name"><br><br>
@@ -162,6 +130,7 @@
             <input type="text" id="subject"><br><br>
 
             <label for="message">Message:</label><br>
+
             <textarea
                 id="message"
                 rows="5"
@@ -169,190 +138,153 @@
 
             <br><br>
 
-            <!-- Tooltip added to Submit button -->
+            <!--Tooltip added to Submit button-->
             <div class="tooltip">
                 <input
                     type="submit"
                     id="submitButton"
                     value="Submit">
-
                 <span class="tooltip-text">
                     Click to send your message!
                 </span>
             </div>
         </form>
-
         <p id="formStatus"></p>
     </section>
 
     <script>
 
-        // Close the welcome modal when the Close button is clicked
-        const welcomeModal =
-            document.getElementById("welcomeModal");
+        // Close the welcome modal when the Close button is clicked.
+        const welcomeModal = document.getElementById("welcomeModal");
+        const closeModal = document.getElementById("closeModal");
+        closeModal.addEventListener("click", function () {welcomeModal.style.display = "none";});
 
-        const closeModal =
-            document.getElementById("closeModal");
+        // Array of skills and technologies.
+        const skills = ["HTML", "CSS", "JavaScript", "Git", "GitHub"];
 
-        closeModal.addEventListener(
-            "click",
-            function () {
-                welcomeModal.style.display = "none";
-            }
-        );
-
-        // Array of skills and technologies
-        const skills = [
-            "HTML",
-            "CSS",
-            "JavaScript",
-            "Git",
-            "GitHub"
-        ];
-
-        // Display skills using a loop
-        const skillsList =
-            document.getElementById("skillsList");
-
+        // Display skills using a loop.
+        const skillsList = document.getElementById("skillsList");
         for (let i = 0; i < skills.length; i++) {
-            const listItem =
-                document.createElement("li");
-
-            listItem.textContent =
-                skills[i];
-
-            skillsList.appendChild(
-                listItem
-            );
+            const listItem =document.createElement("li");
+            listItem.textContent = skills[i];
+            skillsList.appendChild(listItem);
         }
 
-        // Determine which Featured Content sections to display
-        const projects =
-            document.querySelectorAll("#projects .project");
+        // Custom Project Objects
+        const project1 = {
+            title: "StopPoint",
+            summary: "StopPoint is a personal web development project designed to display and manage location-based information. It demonstrates my continued work with modern web development technologies.",
+            image: "https://via.placeholder.com/150",
+            repository: "https://stoppoint.us"
+        };
 
-        const universityResources =
-            document.getElementById("universityResources");
+        const project2 = {
+            title: "Vigilant Waffle",
+            summary: "Vigilant Waffle is a personal GitHub Pages project used to practice HTML, CSS, JavaScript, and website development. It also provides experience publishing content through GitHub.",
+            image: "https://via.placeholder.com/150",
+            repository: "https://micsto7893.github.io/vigilant-waffle/"
+        };
 
-        const personalProjects =
-            document.getElementById("personalProjects");
+        const project3 = {
+            title: "Hello World",
+            summary: "Hello World is a GitHub repository used to practice basic Git and GitHub concepts. It demonstrates repository creation and version control fundamentals.",
+            image: "https://via.placeholder.com/150",
+            repository: "https://github.com/micsto7893/hello-world"
+        };
 
-        if (projects.length < 3) {
-            universityResources.style.display =
-                "block";
+        // Store all project objects inside an array.
+        const defaultProjects = [project1, project2, project3];
 
-            personalProjects.style.display =
-                "block";
-        }
-        else {
-            universityResources.style.display =
-                "none";
+        // Store and Parse Project Information
+        let projectData;
+        const savedProjects = sessionStorage.getItem("projects");
+        if (savedProjects === null) {
+            const projectString = JSON.stringify(defaultProjects);
+            sessionStorage.setItem("projects", projectString); 
+            projectData = defaultProjects;
+        } 
+        else {projectData = JSON.parse(savedProjects);}
 
-            personalProjects.style.display =
-                "block";
-        }
+        // Select the project container using a DOM selector.
+        const projectContainer = document.querySelector("#projectContainer");
+        
+        // Loop through the project array and dynamically create HTML elements for every project.
+        projectData.forEach(function (project) {const projectDiv = document.createElement("div"); projectDiv.className = "project";
 
-        // Dark Mode toggle
-        const darkModeToggle =
-            document.getElementById("darkModeToggle");
+                // Create the project title.
+                const projectTitle = document.createElement("h3"); projectTitle.textContent = project.title;
 
+                // Create the project image.
+                const projectImage = document.createElement("img"); projectImage.src = project.image;
+                 projectImage.alt = project.title + " Project";
 
-        // Check localStorage when the page loads
-        const savedDarkMode =
-            localStorage.getItem("darkMode");
+                // Create the project summary.
+                const projectSummary = document.createElement("p"); projectSummary.textContent = project.summary;
 
-        if (savedDarkMode === "enabled") {
-            document.body.classList.add(
-                "dark-mode"
-            );
+                // Create the project link.
+                const projectLink = document.createElement("a"); projectLink.href = project.repository;
+                 projectLink.target = "_blank"; projectLink.textContent = "View Project";
 
-            darkModeToggle.checked =
-                true;
-        }
+                // Add all elements to the project div.
+                projectDiv.appendChild(projectTitle);
+                projectDiv.appendChild(projectImage);
+                projectDiv.appendChild(projectSummary);
+                projectDiv.appendChild(projectLink);
 
-        // Change Dark Mode and save the user's preference
-        darkModeToggle.addEventListener(
-            "change",
-            function () {
-
-                document.body.classList.toggle(
-                    "dark-mode",
-                    darkModeToggle.checked
-                );
-
-                if (darkModeToggle.checked) {
-                    localStorage.setItem(
-                        "darkMode",
-                        "enabled"
-                    );
-                }
-                else {
-                    localStorage.setItem(
-                        "darkMode",
-                        "disabled"
-                    );
-                }
+                // Add the completed project to the page.
+                projectContainer.appendChild(projectDiv);
             }
         );
 
-        // Dynamically create and add a new paragraph to the Projects section
-        const projectsSection =
-            document.getElementById("projects");
+        // Featured Content
+        const renderedProjects = document.querySelectorAll("#projects .project");
+        const universityResources = document.getElementById("universityResources");
+        const personalProjects = document.getElementById("personalProjects");
+        if (renderedProjects.length < 3) {
+            universityResources.style.display = "block"; 
+            personalProjects.style.display = "block";
+        } 
+        else {
+            universityResources.style.display = "none"; 
+            personalProjects.style.display = "block";
+        }
 
-        const newProjectMessage =
-            document.createElement("p");
+        // Dark Mode
+        const darkModeToggle = document.getElementById("darkModeToggle");
 
-        newProjectMessage.textContent =
-            "I am continuing to expand my portfolio with new web development projects using HTML, CSS, and JavaScript.";
+        // Check localStorage when the page loads.
+        const savedDarkMode = localStorage.getItem("darkMode");
+        if (savedDarkMode === "enabled") {document.body.classList.add("dark-mode"); darkModeToggle.checked = true;}
 
-        projectsSection.appendChild(
-            newProjectMessage
+        // Change Dark Mode and save the user's preference.
+        darkModeToggle.addEventListener("change",
+            function () {document.body.classList.toggle("dark-mode", darkModeToggle.checked);
+                if (darkModeToggle.checked) {localStorage.setItem("darkMode", "enabled");} 
+                else {localStorage.setItem("darkMode", "disabled");}
+            }
         );
 
-        // Select and modify two existing elements
-        const aboutHeading =
-            document.querySelector("#aboutHeading");
+// Dynamically create and add a paragraph to Projects.
+        const projectsSection = document.getElementById("projects");
+        const newProjectMessage = document.createElement("p");
+        newProjectMessage.textContent = "I am continuing to expand my portfolio with new web development projects using HTML, CSS, and JavaScript.";
+        projectsSection.appendChild(newProjectMessage);
 
-        aboutHeading.textContent =
-            "About Me";
+        // Select and modify two existing elements.
+        const aboutHeading = document.querySelector("#aboutHeading");aboutHeading.textContent = "About Me";aboutHeading.style.fontSize = "28px";
+        const projectsHeading = document.getElementById("projectsHeading"); projectsHeading.style.borderBottom ="2px solid black";
+         projectsHeading.style.paddingBottom ="5px";
 
-        aboutHeading.style.fontSize =
-            "28px";
+        // Contact Form
+        const contactForm = document.getElementById("contactForm"); contactForm.addEventListener("submit",
+            function (event) {event.preventDefault();
+                const formStatus = document.getElementById("formStatus");
 
-        const projectsHeading =
-            document.getElementById("projectsHeading");
+                // Display sending message.
+                formStatus.textContent = "Sending message...";
 
-        projectsHeading.style.borderBottom =
-            "2px solid black";
-
-        projectsHeading.style.paddingBottom =
-            "5px";
-
-        // Contact form submission
-        const contactForm =
-            document.getElementById("contactForm");
-
-        contactForm.addEventListener(
-            "submit",
-            function (event) {
-
-                // Prevent normal form submission
-                event.preventDefault();
-
-                const formStatus =
-                    document.getElementById("formStatus");
-
-                // Display sending message
-                formStatus.textContent =
-                    "Sending message...";
-
-                // Wait three seconds before confirmation
-                setTimeout(
-                    function () {
-                        formStatus.textContent =
-                            "Message sent successfully!";
-                    },
-                    3000
-                );
+                // Wait three seconds before confirmation.
+                setTimeout(function () {formStatus.textContent = "Message sent successfully!";}, 3000);
             }
         );
     </script>
